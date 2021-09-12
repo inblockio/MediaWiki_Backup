@@ -21,6 +21,7 @@ OPTIONS:
     -h  Show this message.
     -a  The archive containing the backup.
     -w  The wiki installation directory where the backup should be restored.
+    -n  The MySQL username
     -p  The MySQL user password.
     -d  Recreate the wiki MySQL database, based on the DB name found in the backup archive.
     -u  Recreate the wiki MySQL user, based on the user found in the backup archive.
@@ -34,13 +35,14 @@ function get_options {
     RESTORE_USER=
     RESTORE_DB=
 
-    while getopts 'hdua:w:p:' OPT; do
+    while getopts 'hdua:w:n:p:' OPT; do
         case $OPT in
             h) usage_restore; exit 1;;
             d) RESTORE_DB=1;;
             u) RESTORE_USER=1;;
             a) ARCHIVE_FILE=$OPTARG;;
             w) INSTALL_DIR=$OPTARG;;
+            n) MYSQL_USERNAME=$OPTARG;;
             p) MYSQL_PASSWORD=$OPTARG;;
         esac
     done
@@ -75,7 +77,7 @@ function get_options {
 function execute_sql {
     SQL_STATEMENT=$1
     echo "Executing statement : '$SQL_STATEMENT'"
-    echo $SQL_STATEMENT | mysql -u root --password=$MYSQL_PASSWORD --host=$DB_HOST 
+    echo $SQL_STATEMENT | mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD --host=$DB_HOST 
 }
   
 function restore_database {
@@ -100,7 +102,7 @@ function restore_database_content {
     fi
 
     echo "Restoring database '$DB_NAME' from file $SQLFILE" 
-    gunzip -c $SQLFILE | mysql -u root --password=$MYSQL_PASSWORD --host=$DB_HOST $DB_NAME
+    gunzip -c $SQLFILE | mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD --host=$DB_HOST $DB_NAME
 }
 
 ################################################################################
