@@ -17,6 +17,9 @@
 #    https://github.com/Adnn/MediaWiki_Backup/
 #
 
+# IMPORTANT: Don't use set -e, because otherwise the script will prematurely
+# exit when the grep exit status in toggle_read_only is 1.
+# set -e
 
 ################################################################################
 ## Output command usage

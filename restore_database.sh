@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 SQLFILE=$1
 
 ## Includes functions.sh to get access to its functions

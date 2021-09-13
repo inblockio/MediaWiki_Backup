@@ -5,6 +5,8 @@
 # Copyright Adrien D 2014 CC-BY-SA
 #
 
+set -e
+
 ################################################################################
 ## Includes backup.sh to get access to its functions
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

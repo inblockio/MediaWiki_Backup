@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 INSTALL_DIR=$1
 
 ## Includes backup.sh to get access to its functions

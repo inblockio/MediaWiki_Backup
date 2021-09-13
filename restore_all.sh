@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -e
 archive_file=2021-09-12-mediawiki_backup.tar.gz
 
 # Extract tarball and restore images
