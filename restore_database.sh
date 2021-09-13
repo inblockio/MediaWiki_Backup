@@ -47,8 +47,8 @@ DB_NAME=my_wiki
 DB_USER=wikiuser
 DB_PASS=example
 
-# First we drop the existing database
-mysql -u $DB_USER --password=$DB_PASS --host=$DB_HOST -e "DROP DATABASE IF EXISTS $DB_NAME"
+# First we drop the existing tables in the database
+echo "SELECT concat('DROP TABLE IF EXISTS \\\`', table_name, '\\\`;') FROM information_schema.tables WHERE table_schema = '$DB_NAME';" | mysql -B -N -u $DB_USER --password=$DB_PASS --host=$DB_HOST | mysql -u $DB_USER --password=$DB_PASS --host=$DB_HOST $DB_NAME
 
 restore_database
 restore_user
