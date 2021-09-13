@@ -72,40 +72,6 @@ function get_options {
 }
 
 ################################################################################
-## MySQL wiki database and user creation
-
-function execute_sql {
-    SQL_STATEMENT=$1
-    echo "Executing statement : '$SQL_STATEMENT'"
-    echo $SQL_STATEMENT | mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD --host=$DB_HOST 
-}
-  
-function restore_database {
-    execute_sql "create database $DB_NAME;"
-}
-
-#Information taken from here http://www.mediawiki.org/wiki/Manual:Installation/Creating_system_accounts
-#Compared to show grants for '$user'@host, which showed that 'WITH GRANT OPTION' was not set by the original installation in version 1.17
-# \note the % system is any IP, but does not work for localhost ! see http://stackoverflow.com/questions/10823854/using-for-host-when-creating-a-mysql-user
-function restore_user {
-    execute_sql "grant all privileges on $DB_NAME.* to $DB_USER@localhost.localdomain identified by '$DB_PASS';"
-    execute_sql "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS';"
-    execute_sql "grant all privileges on $DB_NAME.* to $DB_USER@'%' identified by '$DB_PASS';"
-}
-
-################################################################################
-## Database restoration
-function restore_database_content {
-    if [ -z $DB_NAME ]; then
-        echo "No database was found, cannot restore sql dump."
-        return 1
-    fi
-
-    echo "Restoring database '$DB_NAME' from file $SQLFILE" 
-    gunzip -c $SQLFILE | mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD --host=$DB_HOST $DB_NAME
-}
-
-################################################################################
 ## Filesystem restoration
 function restore_filesystem {
     echo "Extracting filesystem from $FS_BACKUP"
@@ -180,21 +146,7 @@ else
     fi
 fi
 
-## It is now possible to try reading LocalSettings.php
-get_localsettings_vars
-
-if [ ! -z $RESTORE_DB ];then
-    restore_database
-fi
-if [ ! -z $RESTORE_USER ];then
-    restore_user
-fi
-
-restore_database_content
-
-# The backup procedure would save LocalSettings in read-only mode
-toggle_read_only OFF
-
+mv "$SQLFILE" /backup/database.sql.gz
 cleanup_archive_expansion
 
 fi # end sourcing guard
