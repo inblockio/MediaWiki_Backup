@@ -12,4 +12,4 @@ docker exec -it micro-pkc_database_1 /MediaWiki_Backup/restore_database.sh /back
 docker exec -it micro-pkc_database_1 rm /backup/database.sql.gz
 
 # Toggle read-only off
-docker exec -it micro-pkc_mediawiki_1 source /MediaWiki_Backup/toggle_read_only_off.sh /var/www/html
+docker exec -it micro-pkc_mediawiki_1 /MediaWiki_Backup/toggle_read_only_off.sh /var/www/html
