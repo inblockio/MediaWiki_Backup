@@ -47,9 +47,12 @@ DB_NAME=my_wiki
 DB_USER=wikiuser
 DB_PASS=example
 
+# We deviate from the original code by not dropping the database. Instead, we
+# drop the tables in the database. And so we don't need to recreate the
+# database.
 # First we drop the existing tables in the database
 echo "SELECT concat('DROP TABLE IF EXISTS \\\`', table_name, '\\\`;') FROM information_schema.tables WHERE table_schema = '$DB_NAME';" | mysql -B -N -u $DB_USER --password=$DB_PASS --host=$DB_HOST | mysql -u $DB_USER --password=$DB_PASS --host=$DB_HOST $DB_NAME
 
-restore_database
-restore_user
+# restore_database
+# restore_user
 restore_database_content
