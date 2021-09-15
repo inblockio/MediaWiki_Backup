@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-archive_file=2021-09-12-mediawiki_backup.tar.gz
+archive_file=$1
 
 # Extract tarball and restore images
 docker exec -it micro-pkc_mediawiki_1 /MediaWiki_Backup/extract_and_restore_images.sh -a "/backup/$archive_file" -w /var/www/html
