@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -e
+# We cannot use set -e because toggle_read_only sometimes has an exit status 1
+# and needs to continue.
+#set -e
 
 INSTALL_DIR=$1
 
