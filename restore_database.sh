@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# Copyright Sam Wilson 2013 CC-BY-SA
+# http://creativecommons.org/licenses/by-sa/3.0/au/
+#
 
 set -e
 

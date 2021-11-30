@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# Copyright Sam Wilson 2013 CC-BY-SA
+# http://creativecommons.org/licenses/by-sa/3.0/au/
+#
 
 # We cannot use set -e because toggle_read_only sometimes has an exit status 1
 # and needs to continue.
