@@ -150,7 +150,7 @@ function toggle_read_only {
             grep "?>" "$LOCALSETTINGS" > /dev/null
             if [ $? -eq 0 ];
             then
-                sed -i "s/?>/\n$MSG/ig" "$LOCALSETTINGS"
+                sed -i --follow-symlinks "s/?>/\n$MSG/ig" "$LOCALSETTINGS"
             else
                 echo "$MSG" >> "$LOCALSETTINGS"
             fi 
@@ -161,7 +161,7 @@ function toggle_read_only {
         # Remove read-only message
         if [ $PRESENT -eq 0 ]; then 
             echo "Returning to write mode"
-            sed -i "s/$MSG//ig" "$LOCALSETTINGS"
+            sed -i --follow-symlinks "s/$MSG//ig" "$LOCALSETTINGS"
         else
             echo "Already in write mode"
         fi
